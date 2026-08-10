@@ -9,6 +9,7 @@ import {
   ShieldAlert,
   Users,
   Settings,
+  UserCheck,
   Scale
 } from 'lucide-react';
 
@@ -23,6 +24,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     { id: 'theft-radar', label: 'Anti-Theft Radar & Audits', icon: ShieldAlert, alertBadge: '1' },
     { id: 'operators', label: 'Operator Management', icon: Users },
     { id: 'settings', label: 'Kanta & System Settings', icon: Settings },
+    { id: 'profile', label: 'My Profile & Security', icon: UserCheck },
   ];
 
   return (

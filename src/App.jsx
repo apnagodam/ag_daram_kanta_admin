@@ -11,6 +11,7 @@ import VehicleReports from './components/VehicleReports';
 import TheftRadarAudit from './components/TheftRadarAudit';
 import OperatorManagement from './components/OperatorManagement';
 import SystemSettings from './components/SystemSettings';
+import UserProfile from './components/UserProfile';
 import { fetchAnalytics, fetchWeighbridges, fetchWeighments } from './services/api';
 
 export default function App() {
@@ -61,9 +62,11 @@ export default function App() {
   }, [currentUser]);
 
   const handleLogout = () => {
-    localStorage.removeItem('ag_admin_token');
-    localStorage.removeItem('ag_admin_user');
-    setCurrentUser(null);
+    if (window.confirm('Are you sure you want to log out of the Admin Portal?')) {
+      localStorage.removeItem('ag_admin_token');
+      localStorage.removeItem('ag_admin_user');
+      setCurrentUser(null);
+    }
   };
 
   // IF NOT AUTHENTICATED: SHOW LOGIN SCREEN
@@ -83,6 +86,7 @@ export default function App() {
           onRefresh={loadData}
           user={currentUser}
           onLogout={handleLogout}
+          onNavigate={setActiveTab}
         />
 
         <main className="flex-1 overflow-y-auto">
@@ -125,6 +129,9 @@ export default function App() {
               )}
               {activeTab === 'settings' && (
                 <SystemSettings />
+              )}
+              {activeTab === 'profile' && (
+                <UserProfile user={currentUser} onUpdateUser={(u) => setCurrentUser(u)} />
               )}
             </>
           )}

@@ -1,7 +1,7 @@
 import React from 'react';
-import { LogOut, RefreshCw, Shield, Database } from 'lucide-react';
+import { LogOut, RefreshCw, Shield, Database, UserCheck } from 'lucide-react';
 
-export default function Header({ activeTab, onRefresh, user, onLogout }) {
+export default function Header({ activeTab, onRefresh, user, onLogout, onNavigate }) {
   const getTitle = () => {
     switch (activeTab) {
       case 'dashboard':
@@ -22,6 +22,8 @@ export default function Header({ activeTab, onRefresh, user, onLogout }) {
         return { main: 'Operator & Staff Management', sub: 'Manage Kanta Operators, System Roles & Access Status' };
       case 'settings':
         return { main: 'Kanta & System Threshold Settings', sub: 'Configure Variance Tolerances, OCR Confidence & MongoDB Sync' };
+      case 'profile':
+        return { main: 'My Profile & Security', sub: 'Manage Your Admin Account Credentials & Access Permissions' };
       default:
         return { main: 'Apna Godam Admin', sub: 'AG-Daram Kanta Portal' };
     }
@@ -55,13 +57,17 @@ export default function Header({ activeTab, onRefresh, user, onLogout }) {
         </button>
 
         {/* LOGGED IN USER PROFILE */}
-        <div className="flex items-center gap-3 pl-3 border-l border-slate-200">
+        <div
+          onClick={() => onNavigate && onNavigate('profile')}
+          className="flex items-center gap-3 pl-3 border-l border-slate-200 cursor-pointer hover:opacity-80 transition-opacity"
+          title="Click to view My Profile & Security"
+        >
           <div className="w-9 h-9 rounded-xl bg-emerald-900 text-white flex items-center justify-center font-black text-sm shadow-md">
             {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
           </div>
           <div className="hidden lg:block text-left">
             <div className="text-xs font-black text-slate-900 leading-tight">
-              {user?.name || 'Super Admin'}
+              {user?.name || 'Admin Master'}
             </div>
             <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider flex items-center gap-1">
               <Shield className="w-3 h-3 inline" />
