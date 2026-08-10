@@ -62,7 +62,7 @@ export default function App() {
   }, [currentUser]);
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure you want to log out of the Admin Portal?')) {
+    if (window.confirm('Are you sure you want to log out?')) {
       localStorage.removeItem('ag_admin_token');
       localStorage.removeItem('ag_admin_user');
       setCurrentUser(null);
@@ -77,7 +77,7 @@ export default function App() {
   return (
     <div className="flex min-h-screen bg-slate-100 font-sans antialiased text-slate-900">
       {/* SIDEBAR NAVIGATION */}
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} userRole={currentUser.role || 'ADMIN'} />
 
       {/* MAIN CONTAINER */}
       <div className="flex-1 flex flex-col min-w-0">

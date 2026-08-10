@@ -13,19 +13,21 @@ import {
   Scale
 } from 'lucide-react';
 
-export default function Sidebar({ activeTab, setActiveTab }) {
-  const menuItems = [
-    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard },
-    { id: 'kantas', label: 'Dharam Kanta Registry', icon: Building },
-    { id: 'trucks', label: 'Truck & Vehicle Directory', icon: Truck },
-    { id: 'slips', label: 'Weighment Slips Master', icon: FileText },
-    { id: 'requests', label: 'Requests & Approvals', icon: Inbox, badge: '2' },
-    { id: 'reports', label: 'Vehicle Reports & Tonnage', icon: BarChart3 },
-    { id: 'theft-radar', label: 'Anti-Theft Radar & Audits', icon: ShieldAlert, alertBadge: '1' },
-    { id: 'operators', label: 'Operator Management', icon: Users },
-    { id: 'settings', label: 'Kanta & System Settings', icon: Settings },
-    { id: 'profile', label: 'My Profile & Security', icon: UserCheck },
+export default function Sidebar({ activeTab, setActiveTab, userRole = 'ADMIN' }) {
+  const allMenuItems = [
+    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard, roles: ['ADMIN', 'SUPERVISOR', 'OPERATOR'] },
+    { id: 'kantas', label: 'Dharam Kanta Registry', icon: Building, roles: ['ADMIN', 'SUPERVISOR', 'OPERATOR'] },
+    { id: 'trucks', label: 'Truck & Vehicle Directory', icon: Truck, roles: ['ADMIN', 'SUPERVISOR', 'OPERATOR'] },
+    { id: 'slips', label: 'Weighment Slips Master', icon: FileText, roles: ['ADMIN', 'SUPERVISOR', 'OPERATOR'] },
+    { id: 'requests', label: 'Requests & Approvals', icon: Inbox, badge: '2', roles: ['ADMIN', 'SUPERVISOR'] },
+    { id: 'reports', label: 'Vehicle Reports & Tonnage', icon: BarChart3, roles: ['ADMIN', 'SUPERVISOR'] },
+    { id: 'theft-radar', label: 'Anti-Theft Radar & Audits', icon: ShieldAlert, alertBadge: '1', roles: ['ADMIN', 'SUPERVISOR'] },
+    { id: 'operators', label: 'Operator Management', icon: Users, roles: ['ADMIN', 'SUPERVISOR'] },
+    { id: 'settings', label: 'Kanta & System Settings', icon: Settings, roles: ['ADMIN'] },
+    { id: 'profile', label: 'My Profile & Security', icon: UserCheck, roles: ['ADMIN', 'SUPERVISOR', 'OPERATOR'] },
   ];
+
+  const menuItems = allMenuItems.filter(item => item.roles.includes(userRole));
 
   return (
     <aside className="w-72 bg-[#0F2817] text-white flex flex-col min-h-screen border-r border-[#1B4326] shadow-xl flex-shrink-0">
@@ -39,7 +41,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
             APNA GODAM
           </h1>
           <p className="text-[11px] font-extrabold text-amber-400 tracking-wider uppercase">
-            AG. धर्म कांटा Admin
+            AG. धर्म कांटा {userRole === 'OPERATOR' ? 'OPERATOR' : 'ADMIN'}
           </p>
         </div>
       </div>
@@ -47,7 +49,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       {/* NAVIGATION MENU */}
       <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">
         <div className="text-[10px] font-extrabold text-emerald-400/60 uppercase tracking-widest px-3 py-2">
-          Main Navigation
+          {userRole === 'OPERATOR' ? 'Operator Workspace' : 'Main Navigation'}
         </div>
 
         {menuItems.map((item) => {
